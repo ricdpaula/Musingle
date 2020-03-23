@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <title>
+    Musingle - Escute playlists de clássicos jogos de video-game e sinta a
+    nostalgia.
+  </title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description"
+    content="MUSINGLE oferece uma plataforma de streaming de música compactada, minimalista e focada apenas na elaboração de uma playlist individual." />
+
+  <!-- Bootstrap CSS, VueJs, SASS, Fontawasome e Favicon -->
+  <script src="js/vue.js"></script>
+  <link rel="shortcut icon" href="img/favicon.ico" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <!-- Codificação jquery -->
+  <script>
+    $(document).ready(function () {
+      $(".hidePlayer").click(function () {
+        $(".jumbotron").slideToggle();
+      });
+      $("#btnInfo").click(function () {
+        $("#textAlbum").slideToggle();
+      });
+      $("#btnMenuDrop").click(function () {
+        $(".menuDrop").slideToggle();
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div id="app-musicPlayer">
+    <!-- Musica -->
+    <audio id="mySong" @ended="autoplayNext()">
+      <source id="playing" v-bind:src="musics.songPlaying[0]" type="audio/mpeg" />
+    </audio>
+    <!-- navBar -->
+    <nav class="navBar">
+      <a href="mario-musingle.html"><img src="img/logo.png" alt="logo Musingle" /></a>
+      <i class="fa fa-bars" id="btnMenuDrop" aria-hidden="true"></i>
+    </nav>
+    <!-- dropMenu -->
+    <div class="menuDrop">
+      <div class="menuDrop-content">
+        <b>
+          <p id="title-navContent">Playlists:</p>
+        </b>
+        <a href="random-musingle.html">
+          <p class="itemMenu">Minha playlist :)</p>
+        </a>
+      </div>
+    </div>
+    <!-- Album -->
+    <div class="container">
+      <h2 id="title-album">{{tMusic}}</h2>
+      <p id="subtitle">{{iMusic}}</p>
+      <div class="album-controls">
+        <i class="fa fa-angle-left" aria-hidden="true" @click="previousSong()"></i>
+        <div id="albumAnim" class="album label-default">
+          <div id="bar1" class="bar-1"></div>
+          <div id="bar2" class="bar-2"></div>
+          <div id="bar3" class="bar-3"></div>
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" @click="nextSong()"></i>
+      </div>
+      <i id="textInfo">Informações do álbum:</i>
+      <button id="btnInfo" class="btn btn-outline-light">
+        Mostrar/Esconder
+      </button>
+      <small id="textAlbum">
+        <b>Minha playlist :)</b><br />
+        <hr width="20%" color="white" size="thin" />
+        Playlist de músicas randomizadas! Clássicas e modernas.
+      </small>
+    </div>
+    <!-- Esconder player -->
+    <div class="player">
+      <div class="hidePlayer">
+        <i class="fa fa-angle-down" aria-hidden="true"></i>
+      </div>
+      <!-- Player -->
+      <div class="jumbotron">
+        <div class="label-info">
+          <div id="discSong">
+            <i class="fa fa-times-circle" aria-hidden="true"></i>
+          </div>
+          <small><b>{{tMusic}}</b><br />{{iMusic}}</small>
+          <i class="fa fa-heart-o" aria-hidden="true" id="favoritar1" @click="favoritarNull()"></i>
+          <i class="fa fa-heart" aria-hidden="true" id="favoritar2" @click="favoritarNull()"></i>
+        </div>
+        <div class="player-control">
+          <input type="range" name="inRangeDuration" id="duration" v-model="durationMusic" @mouseup="controlMusic()"
+            @touchend="controlMusic()" v-bind:max="maxDuration" />
+          <div class="action-controls">
+            <!-- Controles do player -->
+            <i class="fa fa-arrow-circle-o-left" aria-hidden="true" style="font-size: 1.2rem;"
+              @click="previousSong()"></i>
+            <i class="fa fa-play-circle-o" aria-hidden="true" style="font-size: 2.2rem;" @click="playMusic()"></i>
+            <i class="fa fa-pause-circle-o" aria-hidden="true" style="font-size: 2.2rem;" @click="pauseMusic()"></i>
+            <i class="fa fa-arrow-circle-o-right" aria-hidden="true" style="font-size: 1.2rem;" @click="nextSong()"></i>
+          </div>
+        </div>
+        <!-- Volume -->
+        <div>
+          <input type="range" name="volume" id="inRange" min="0" max="1" step="0.25" @mouseup="volume()"
+            @touchend="volume()" />
+        </div>
+      </div>
+      <div class="devName">
+        <small style="color: white;">DailyFrontEnd | Ricardo de Paula Silva &copy; 2020</small>
+      </div>
+    </div>
+  </div>
+  <script>
+    new Vue({
+      el: "#app-musicPlayer",
+      data: {
+        durationMusic: "",
+        maxDuration: "",
+        tMusic: "Minha playlist :)",
+        iMusic: "Post malone",
+        // Arrays com as informações do album [0 - ?]
+        infoAlbum: [
+          "Rockstar | Post Malone",
+          "Human | Rag N Bone Man",
+          "Promiscuous | Nelly Furtado",
+          "Alone | Marshmello",
+          "Happier | Marshmello",
+          "Meet Me Halfway | Black Eyed Peas",
+          "Nevermind | Dennis Lloyd",
+          "Humble | Kendrick Lamar",
+          "Lil Nas X | Old Town Road",
+          "Lalala | Y2k Bbno$",
+          "Livin' on a Player | Bon Jovi",
+          "Rebel yell | Billy Idol",
+          "Nothing Else Matters | Metalica",
+          "Would | Alice in Chains",
+          "Got the life | Korn",
+          "Clint eastwood | Gorillaz",
+          "Feel Good Inc. | Gorillaz",
+          "Gangsta's Paradise | Coolio",
+          "Horse with no name | America",
+          "Hold the line | Toto",
+          "I need a dollar | Aloe Blacc",
+          "Hey ya | Outkast"
+        ],
+        musics: {
+          // Array com as músicas [0 - ?]
+          songPlaying: [
+            "http://kunalsdatabase.com/files/popularmusic/Post%20Malone/beerbongs%20&%20bentleys%20(Album)/06%20rockstar.mp3",
+            "https://tegos.kz/new/mp3_full/Rag_n_Bone_Man_-_Human.mp3",
+            "http://lliwou.free.fr/Music/Nelly%20Furtado%20ft%20Timberland%20-%20Promiscuous%20girl.mp3",
+            "https://nn01-sycdn.kuwo.cn/resource/n2/35/22/1554739922.mp3",
+            "https://dl.music314.com/ftp/music/2018/1424704480.mp3",
+            "https://api.ning.com/files/ZQgBl3X0IQSxy4Vuy7lVwiKUFtP0dLmXTEt7pyI0NAM8jSn88xyaV4Soc9VOjzgYi4UIUOAbf1-t68ITcD1dg6lDtKgQV*N9/BlackEyedPeaceMeetMeHalfway.mp3",
+            "https://nu01-sycdn.kuwo.cn/resource/n3/7/77/2942454898.mp3",
+            "https://www.stuffdown.com/track/Kendrick%20Lamar%20-%20Humble%20-%20(www.SongsLover.club).mp3",
+            "https://sn-sycdn.kuwo.cn/resource/n3/6/64/837260519.mp3",
+            "https://dl.music314.com/ftp/music/163/38.%20Lalala%20-%20Y2K_bbno$.mp3",
+            "http://www.drycounty.com/downloads/mp3/Crush-LivingOnAPrayer.mp3",
+            "http://www.ibscoreboard.net/media/Billy_Idol_-_Rebel_Yell.mp3",
+            "http://maxime.sabin.free.fr/perso/musique/metallica%20-%20nothing%20else%20matters.mp3",
+            "http://herenow.co.il/stuff/backups/music/1000%20Best%20Rock%20Songs%20of%20All%20Time/196.Alice%20In%20Chains%20-%20Would.mp3",
+            "http://fragpowa.free.fr/zic/Korn/Korn%20-%20Greatest%20Hits%20Vol%201%20(2004)/12-korn-got_the_life-rns.mp3",
+            "https://img1.liveinternet.ru/images/attach/c/1//3805/3805692_gorillaz__clint_eastwood.mp3",
+            "http://absolution37.free.fr/mp3/06%20Feel%20Good%20Inc..mp3",
+            "https://aidd.org/conspiracy/04/sounds/mp3s/complete-90s-collection/1995/Coolio%20-%20Gangsta's%20Paradise%20(1995).mp3",
+            "https://www.aidd.org/conspiracy/03/sounds/mp3s/Time%20Life%20-%20The%2070s%20Collection%201970-1979%2044%20CD's/1972/The%2070's%20Collection%20-%201972%20(Disc%201)/10%20-%20America%20-%20Horse%20With%20No%20Name.mp3",
+            "http://earbuds.popdose.com/thechrisholmes/tuneage/amgold/1979/02%20Hold%20the%20Line.mp3",
+            "http://www.2dopeboyz.com/wp-content/uploads/2010/02/Aloe_Blacc-I_Need_a_Dollar-2dope.mp3",
+            "http://files.sfenyc.com/Music/outkast%20-%20hey%20ya.mp3"
+          ]
+        }
+      },
+      methods: {
+        // Iniciar primeira música
+        playMusic: function () {
+          music = document.getElementById("mySong");
+          disc = document.getElementById("discSong");
+          disc.style.animationIterationCount = "infinite";
+          // Animação barras
+          bar1 = document.getElementById("bar1");
+          bar2 = document.getElementById("bar2");
+          bar3 = document.getElementById("bar3");
+          bar1.style.animation = "bar1 linear .6s infinite";
+          bar2.style.animation = "bar2 linear .4s infinite";
+          bar3.style.animation = "bar3 linear 1s infinite";
+          // Variável para nova música
+          next = 0;
+          // Tocar música
+          music.play(this.musics.songPlaying[next]);
+        },
+        controlMusic: function () {
+          // Duração da música
+          music.currentTime = this.durationMusic;
+          console.log(this.durationMusic);
+          this.maxDuration = music.duration;
+        },
+        // Pausar música
+        pauseMusic: function () {
+          music.pause();
+          disc.style.animationIterationCount = "0";
+          bar1.style.animation = "bar1 linear 1s forwards";
+          bar2.style.animation = "bar2 linear 1s forwards";
+          bar3.style.animation = "bar3 linear 1s forwards";
+        },
+        // Ação quando a música acabar
+        autoplayNext: function () {
+          // Parar animação barras
+          bar1.style.animation = "bar1 linear 1s infinite";
+          bar2.style.animation = "bar2 linear 1s infinite";
+          bar3.style.animation = "bar3 linear 1s infinite";
+          // Reprodução automática
+          next += 1;
+          if (next > this.musics.songPlaying.length - 1) {
+            alert("Fim da playlist :(");
+            document.location.reload(true);
+          }
+          document.getElementById("playing").src = this.musics.songPlaying[
+            next
+          ];
+          music.load();
+          music.play();
+          // Retomar animação
+          window.setTimeout(function () {
+            bar1.style.animation = "bar1 linear .6s infinite";
+            bar2.style.animation = "bar2 linear .4s infinite";
+            bar3.style.animation = "bar3 linear 1s infinite";
+          }, 1000);
+          // nome musica
+          this.iMusic = this.infoAlbum[next];
+          // Animação imagem album
+          window.setTimeout(function () {
+            albumAnimate = document.getElementById("albumAnim");
+            albumAnimate.style.transform = "scale(1.05)";
+            albumAnimate.style.opacity = "0";
+            window.setTimeout(function () {
+              albumAnimate.style.transform = "scale(1)";
+              albumAnimate.style.opacity = "1";
+            }, 500);
+          }, 300);
+        },
+        // Volume da música
+        volume: function () {
+          var volSong = document.getElementById("inRange").value;
+          music.volume = volSong;
+          console.log(volSong);
+        },
+        // Favoritar música
+        favoritarNull: function () {
+          var coracaoDisabled = document.getElementById("favoritar1");
+          var coracaoActive = document.getElementById("favoritar2");
+          coracaoDisabled.style.display = "none";
+          coracaoActive.style.display = "flex";
+          coracaoActive.onclick = function () {
+            this.style.display = "none";
+            coracaoDisabled.style.display = "flex";
+          };
+        },
+        // Próxima música
+        nextSong: function () {
+          next += 1;
+          if (next > this.musics.songPlaying.length - 1) {
+            alert("Fim da playlist :(");
+            document.location.reload(true);
+          }
+          document.getElementById("playing").src = this.musics.songPlaying[
+            next
+          ];
+          disc.style.animationIterationCount = "0";
+          window.setTimeout(function () {
+            disc.style.animationIterationCount = "infinite";
+          }, 500);
+          console.log(next);
+          music.load();
+          music.play();
+          // nome musica
+          this.iMusic = this.infoAlbum[next];
+          // Animação imagem album
+          window.setTimeout(function () {
+            albumAnimate = document.getElementById("albumAnim");
+            albumAnimate.style.transform = "scale(1.05)";
+            albumAnimate.style.opacity = "0";
+            window.setTimeout(function () {
+              albumAnimate.style.transform = "scale(1)";
+              albumAnimate.style.opacity = "1";
+            }, 500);
+          }, 300);
+        },
+        // Música anterior
+        previousSong: function () {
+          next -= 1;
+          if (next < 0) {
+            alert("Você está no começo da playlist :)");
+            document.location.reload(true);
+          }
+          document.getElementById("playing").src = this.musics.songPlaying[
+            next
+          ];
+          console.log(next);
+          music.load();
+          music.play();
+          // nome musica
+          this.iMusic = this.infoAlbum[next];
+          // Animação imagem album
+          window.setTimeout(function () {
+            albumAnimate = document.getElementById("albumAnim");
+            albumAnimate.style.transform = "scale(1.05)";
+            albumAnimate.style.opacity = "0";
+            window.setTimeout(function () {
+              albumAnimate.style.transform = "scale(1)";
+              albumAnimate.style.opacity = "1";
+            }, 500);
+          }, 300);
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

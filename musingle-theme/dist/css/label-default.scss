@@ -1,0 +1,99 @@
+// variaveis
+$cor-padrao: #FFC312;
+$cor-padrao2: #F79F1F;
+$cor-contraste: #000;
+$cor-contraste2: #fff;
+$cor-neutra: #ddd;
+$cor-nav: #2d2d2d;
+$cor-nulo: #1d1d1d;
+// mixins
+@mixin flex-start() {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+@mixin flex-end() {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+@mixin flex-centered() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flex-space-around() {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+@mixin flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin background-gradient() {
+    background-image: linear-gradient(to top, $cor-padrao2 10%, $cor-padrao 60%);
+}
+// Encadeamentos
+.label-default{
+    background-color: $cor-nulo;
+    @include flex-centered();
+
+    .bar-1{
+        padding-left: 10px;
+        padding-right: 10px;
+        background-color: $cor-padrao;
+        margin-left:5px;
+        margin-right: 5px;
+        animation: bar1 linear 0s forwards;
+    }
+    .bar-2{
+        padding-left: 10px;
+        padding-right: 10px;
+        background-color: $cor-padrao;
+        margin-left:5px;
+        margin-right: 5px;
+        animation: bar1 linear 0s forwards;
+    }
+    .bar-3{
+        padding-left: 10px;
+        padding-right: 10px;
+        background-color: $cor-padrao;
+        margin-left:5px;
+        margin-right: 5px;
+        animation: bar1 linear 0s forwards;
+    }
+
+    @keyframes bar1 {
+        0%{padding-top: 5px;}
+        20%{padding-top: 20px;}
+        40%{padding-top: 40px;}
+        60%{padding-top: 20px;}
+        80%{padding-top: 60px;}
+        90%{padding-top: 150px;}
+        100%{padding-top: 5px;}
+    }
+    @keyframes bar2 {
+        0%{padding-top: 5px;}
+        20%{padding-top: 20px;}
+        40%{padding-top: 40px;}
+        60%{padding-top: 20px;}
+        80%{padding-top: 60px;}
+        90%{padding-top: 150px;}
+        100%{padding-top: 5px;}
+    }
+    @keyframes bar3 {
+        0%{padding-top: 5px;}
+        20%{padding-top: 20px;}
+        40%{padding-top: 40px;}
+        60%{padding-top: 20px;}
+        80%{padding-top: 60px;}
+        90%{padding-top: 150px;}
+        100%{padding-top: 5px;}
+    }
+}

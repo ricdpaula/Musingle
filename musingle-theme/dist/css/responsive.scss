@@ -1,0 +1,9 @@
+@media only screen and (max-width: 600px) {
+    .jumbotron {
+        flex-direction: column;
+    }
+
+    body .menuDrop .menuDrop-content {
+        flex-direction: column;
+    }
+}
