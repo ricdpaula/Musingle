@@ -9,6 +9,7 @@ $cor-contraste2: #fff;
 $cor-neutra: #ddd;
 $cor-nav: #2d2d2d;
 $cor-nulo: #1d1d1d;
+$cor-fundo: #f56613;
 
 // mixins
 @mixin flex-start() {
@@ -49,6 +50,7 @@ $cor-nulo: #1d1d1d;
 
 body {
     background-image: url("../img/bg-theme/bg.jpg");
+    background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
 
@@ -112,6 +114,7 @@ body {
                     height: 100%;
                     background-color: $cor-nav;
                     color: $cor-contraste2;
+                    border-radius: 5px;
                 }
             }
         }
@@ -287,15 +290,25 @@ body {
                 flex-direction: column;
                 width: 250px;
 
+                .metrics{
+                    @include flex-between();
+                    width: 250px;
+                    small{
+                        font-size: 0.6rem;
+                        font-weight: bold;
+                        color: $cor-fundo;
+                    }
+                }
+
                 #duration {
                     -webkit-appearance: none;
                     -moz-appearance: none;
                     appearance: none;
-                    background-color: $cor-padrao2;
+                    background-color: $cor-fundo;
                     border-radius: 25px;
                     height: 10px;
                     width: 250px;
-                    margin-top: 12px;
+                    margin-top: 5px;
                     margin-bottom: 12px;
 
                     &::-webkit-slider-thumb {
