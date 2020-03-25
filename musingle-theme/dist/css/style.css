@@ -79,7 +79,8 @@ body {
   background-image: url("../img/bg-theme/bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  background-attachment: fixed; }
+  background-attachment: fixed;
+  overflow-x: hidden; }
   body .navBar {
     height: auto;
     padding: 16px;
@@ -132,6 +133,59 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column; }
+    body .container .songList {
+      width: 100vw;
+      height: 100vh;
+      display: none;
+      background-color: rgba(0, 0, 0, 0.5);
+      position: absolute;
+      z-index: 2; }
+      body .container .songList .listDrop {
+        width: auto;
+        height: 400px;
+        overflow: scroll;
+        overflow-x: hidden;
+        background-color: #fff;
+        margin: 25px; }
+        body .container .songList .listDrop::-webkit-scrollbar {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 10px;
+          background-color: #1d1d1d; }
+        body .container .songList .listDrop::-webkit-scrollbar-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          border-radius: 100px;
+          background-color: #2d2d2d; }
+        body .container .songList .listDrop p {
+          background-color: #FFC312;
+          color: #000;
+          font-weight: bold;
+          padding-top: 12px;
+          padding-bottom: 12px;
+          margin: 0px; }
+          body .container .songList .listDrop p:hover {
+            cursor: pointer;
+            -webkit-transition: all .2s ease-in;
+            -moz-transition: all .2s ease-in;
+            transition: all .2s ease-in;
+            background-color: #1d1d1d;
+            color: #fff; }
+        body .container .songList .listDrop ul {
+          list-style-type: disc;
+          background-color: #2d2d2d;
+          margin: 0;
+          padding-top: 12px;
+          padding-bottom: 12px;
+          border: 2px solid #1d1d1d; }
+          body .container .songList .listDrop ul:hover {
+            cursor: pointer;
+            -webkit-transition: all .4s ease-in;
+            -moz-transition: all .4s ease-in;
+            transition: all .4s ease-in;
+            opacity: 0.9; }
+          body .container .songList .listDrop ul li {
+            color: #fff; }
     body .container h2 {
       color: #fff;
       text-align: center;
@@ -189,7 +243,8 @@ body {
     position: fixed;
     bottom: 0px;
     left: 0px;
-    width: 100%; }
+    width: 100%;
+    z-index: 3; }
     body .player .devName {
       display: flex;
       justify-content: center;
