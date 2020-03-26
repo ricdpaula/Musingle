@@ -153,7 +153,7 @@ body {
                     -webkit-appearance: none;
                     appearance: none;
                     border-radius: 100px;
-                    background-color: $cor-nav;
+                    background-color: $cor-neutra;
                 }
 
                 p {
@@ -163,6 +163,10 @@ body {
                     padding-top: 12px;
                     padding-bottom: 12px;
                     margin: 0px;
+                    position: sticky;
+                    top: 0;
+                    box-shadow: 0px 12px 12px rgba(0, 0, 0, 0.5);
+                    z-index: 3;
 
                     &:hover {
                         cursor: pointer;
@@ -175,23 +179,28 @@ body {
                 }
 
                 ul {
-                    list-style-type: disc;
+                    list-style-type: circle;
                     background-color: $cor-nav;
                     margin: 0;
-                    padding-top: 12px;
-                    padding-bottom: 12px;
-                    border: 2px solid $cor-nulo;
-
-                    &:hover {
-                        cursor: pointer;
-                        -webkit-transition: all .4s ease-in;
-                        -moz-transition: all .4s ease-in;
-                        transition: all .4s ease-in;
-                        opacity: 0.9;
-                    }
+                    text-align: center;
 
                     li {
                         color: $cor-contraste2;
+                        padding-top: 12px;
+                        padding-bottom: 12px;
+                        width: 100%;
+                        border-top: 1px solid $cor-nulo;
+                        border-bottom: 1px solid $cor-nulo;
+                        position: relative;
+                        left: -10px;
+                        &:hover {
+                            cursor: pointer;
+                            -webkit-transition: all .2s ease-in;
+                            -moz-transition: all .2s ease-in;
+                            transition: all .2s ease-in;
+                            opacity: 0.6;
+                            font-size: 1.1rem;
+                        }
                     }
                 }
             }
@@ -439,12 +448,12 @@ body {
 
 body::-webkit-scrollbar {
     -webkit-appearance: none;
-    background-color: $cor-contraste;
+    background-color: $cor-nulo;
     width: 10px;
 }
 
 body::-webkit-scrollbar-thumb {
     -webkit-appearance: none;
-    background-color: $cor-nulo;
+    background-color: $cor-neutra;
     border-radius: 100px;
 }
