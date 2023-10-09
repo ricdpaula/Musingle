@@ -1,4 +1,4 @@
-# musingle-theme
+# musingle
 Estudo | Player de música Musingle
 
 Nome do projeto: Musingle
